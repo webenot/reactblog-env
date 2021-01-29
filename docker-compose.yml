@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  balancer:
+    container_name: "balancer"
+    image: nginx
+    restart: "no"
+    volumes:
+      - ./balancer/sites-enabled:/etc/nginx/sites-enabled
+      - ./balancer/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8080:8080"
+
+  web:
+    container_name: "web"
+    image: "node"
+    restart: "no"
+    working_dir: "/mnt/project"
+    volumes:
+      - ./reactblog-blog:/mnt/project
+      - ./reactblog-core:/mnt/reactblog/core
+      - ./reactblog-ui:/mnt/reactblog/ui
+      - ./reactblog-node:/mnt/reactblog/node
+    command: ["npm", "start"]
+
+  seo_service:
+    container_name: "seo_service"
+    image: "node"
+    restart: "no"
+    working_dir: "/mnt/project"
+    volumes:
+      - ./seo-service:/mnt/project
+      - ./reactblog-core:/mnt/reactblog/core
+      - ./reactblog-ui:/mnt/reactblog/ui
+      - ./reactblog-node:/mnt/reactblog/node
+    command: ["npm", "start"]
