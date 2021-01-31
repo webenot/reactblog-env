@@ -21,3 +21,15 @@ services:
       - $PWD/../reactblog-ui:/mnt/reactblog/ui
       - $PWD/../reactblog-node:/mnt/reactblog/node
     command: ["npm", "start"]
+
+  seo_service:
+    container_name: "seo_service"
+    image: "node"
+    restart: "no"
+    working_dir: "/mnt/project"
+    volumes:
+      - $PWD/../reactblog-seo-service:/mnt/project
+      - $PWD/../reactblog-core:/mnt/reactblog/core
+      - $PWD/../reactblog-ui:/mnt/reactblog/ui
+      - $PWD/../reactblog-node:/mnt/reactblog/node
+    command: ["npm", "start"]
